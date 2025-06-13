@@ -45,6 +45,7 @@ export default function AppContext({
 
     if (!message.code) return;
     if (message.type === "user-oauth" && message?.code && !events.code) {
+      console.log("Received code from broadcast channel:", message.code);
       loginFromCode(message.code);
     }
   });

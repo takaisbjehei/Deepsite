@@ -54,6 +54,7 @@ export const useUser = (initialData?: {
   };
 
   const loginFromCode = async (code: string) => {
+    console.log("Login from code => ", code);
     setLoadingAuth(true);
     if (loadingAuth) return;
     await api
@@ -61,13 +62,13 @@ export const useUser = (initialData?: {
       .then(async (res: any) => {
         if (res.data) {
           // fix to be able to set the cookie through the space (Hugging Face)
-          // setCookie(res.data.access_token, {
-          //   expires: res.data.expires_in
-          //     ? new Date(Date.now() + res.data.expires_in * 1000)
-          //     : undefined,
-          //   sameSite: "none",
-          //   secure: true,
-          // });
+          setCookie(res.data.access_token, {
+            expires: res.data.expires_in
+              ? new Date(Date.now() + res.data.expires_in * 1000)
+              : undefined,
+            sameSite: "none",
+            secure: true,
+          });
           client.setQueryData(["user.me"], {
             user: res.data.user,
             errCode: null,
