@@ -18,6 +18,8 @@ export const ProModal = ({
     if (html !== defaultHTML) {
       setStorage(html);
     }
+    window.open("https://huggingface.co/subscribe/pro?from=DeepSite", "_blank");
+    onClose(false);
   };
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -34,28 +36,24 @@ export const ProModal = ({
               🥳
             </div>
           </div>
-          <p className="text-2xl font-bold text-neutral-950">
-            Only 9$ for unlimited access!
-          </p>
+          <h2 className="text-2xl font-bold text-neutral-950">
+            Only $9 to enhance your possibilities
+          </h2>
           <p className="text-neutral-500 text-base mt-2 max-w-sm">
             It seems like you have reached the monthly free limit of DeepSite.
           </p>
           <hr className="bg-neutral-200 w-full max-w-[150px] my-6" />
           <p className="text-lg mt-3 text-neutral-900 font-semibold">
-            Upgrade to a <ProTag className="mx-1" /> Account, and unlock:
+            Upgrade to a <ProTag className="mx-1" /> Account, and unlock your
+            DeepSite high quota access ⚡
           </p>
           <ul className="mt-3 space-y-1 text-neutral-500">
-            <li className="text-sm space-x-2 flex items-center justify-start gap-2">
-              <CheckCheck className="text-emerald-500 size-4" />
-              DeepSite unlimited access to all Inference Providers
+            <li className="text-sm text-neutral-500 space-x-2 flex items-center justify-start gap-2 mb-3">
+              You&apos;ll also unlock some Hugging Face PRO features, like:
             </li>
             <li className="text-sm space-x-2 flex items-center justify-start gap-2">
               <CheckCheck className="text-emerald-500 size-4" />
-              Get highest priority and 8x more quota on Spaces ZeroGPU
-            </li>
-            <li className="text-sm space-x-2 flex items-center justify-start gap-2">
-              <CheckCheck className="text-emerald-500 size-4" />
-              Activate Dataset Viewer on private datasets
+              Get acces to thousands of AI app (ZeroGPU) with high quota
             </li>
             <li className="text-sm space-x-2 flex items-center justify-start gap-2">
               <CheckCheck className="text-emerald-500 size-4" />
@@ -66,7 +64,7 @@ export const ProModal = ({
               Get free credits across all Inference Providers
             </li>
             <li className="text-sm text-neutral-500 space-x-2 flex items-center justify-start gap-2 mt-3">
-              ... and much more!
+              ... and lots more!
             </li>
           </ul>
           <Button
