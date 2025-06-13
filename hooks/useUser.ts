@@ -65,7 +65,7 @@ export const useUser = (initialData?: {
               ? new Date(Date.now() + res.data.expires_in * 1000)
               : undefined,
             sameSite: "none",
-            secure: true,
+            secure: false,
           });
           client.setQueryData(["user.me"], {
             user: res.data.user,
