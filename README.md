@@ -5,7 +5,7 @@ colorFrom: blue
 colorTo: blue
 sdk: docker
 pinned: true
-app_port: 5173
+app_port: 3000
 license: mit
 short_description: Generate any application with DeepSeek
 models:
