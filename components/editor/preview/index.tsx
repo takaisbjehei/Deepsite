@@ -29,6 +29,8 @@ export const Preview = ({
         "w-full border-l border-gray-900 h-full relative z-0 flex items-center justify-center",
         {
           "lg:p-4": currentTab !== "preview",
+          "max-lg:h-0": currentTab === "chat",
+          "max-lg:h-full": currentTab === "preview",
         }
       )}
       onClick={(e) => {
@@ -52,7 +54,7 @@ export const Preview = ({
         ref={iframeRef}
         title="output"
         className={classNames(
-          "w-full select-none transition-all duration-200 bg-black max-lg:h-full",
+          "w-full select-none transition-all duration-200 bg-black",
           {
             "pointer-events-none": isResizing || isAiWorking,
             "lg:max-w-md lg:mx-auto lg:h-[80dvh] lg:!rounded-[42px] lg:border-[8px] lg:border-neutral-700 lg:shadow-2xl":

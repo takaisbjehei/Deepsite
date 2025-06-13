@@ -263,7 +263,7 @@ export function AskAI({
 
   return (
     <>
-      <div className="bg-neutral-800 border border-neutral-700 rounded-2xl ring-[4px] focus-within:ring-neutral-500/30 focus-within:border-neutral-600 ring-transparent z-10 absolute bottom-3 left-3 w-[calc(100%-20px)] group">
+      <div className="bg-neutral-800 border border-neutral-700 rounded-2xl ring-[4px] focus-within:ring-neutral-500/30 focus-within:border-neutral-600 ring-transparent z-10 w-full group">
         {think && (
           <div className="w-full border-b border-neutral-700 relative overflow-hidden">
             <header

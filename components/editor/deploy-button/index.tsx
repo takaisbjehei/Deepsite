@@ -72,7 +72,7 @@ export function DeployButton({
                   Save your Project
                 </Button>
                 <Button variant="sky" size="sm" className="lg:hidden">
-                  Save
+                  Deploy
                 </Button>
               </div>
             </PopoverTrigger>
@@ -97,11 +97,11 @@ export function DeployButton({
                   </div>
                 </div>
                 <p className="text-xl font-semibold text-neutral-950">
-                  Deploy your Project!
+                  Deploy as Space!
                 </p>
                 <p className="text-sm text-neutral-500 mt-1.5">
-                  Deploy your project to a space on the Hub. Spaces are a way to
-                  share your project with the world.
+                  Save and Deploy your project to a Space on the Hub. Spaces are
+                  a way to share your project with the world.
                 </p>
               </header>
               <main className="space-y-4 p-6">
@@ -129,7 +129,7 @@ export function DeployButton({
                     className="relative w-full"
                     disabled={loading}
                   >
-                    Deploy <Rocket className="size-4" />
+                    Deploy Space <Rocket className="size-4" />
                     {loading && (
                       <Loading className="ml-2 size-4 animate-spin" />
                     )}

@@ -166,7 +166,7 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
   }, [currentTab]);
 
   return (
-    <section className="h-screen bg-slate-100 dark:bg-neutral-950 flex flex-col">
+    <section className="h-[100dvh] bg-neutral-950 flex flex-col">
       <Header tab={currentTab} onNewTab={setCurrentTab}>
         {project?._id ? (
           <SaveButton html={html} prompts={prompts} />
@@ -174,10 +174,13 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
           <DeployButton html={html} prompts={prompts} />
         )}
       </Header>
-      <main className="bg-neutral-950 flex-1 max-lg:flex-col flex w-full">
+      <main className="bg-neutral-950 flex-1 max-lg:flex-col flex w-full max-lg:h-[calc(100%-82px)] relative">
         {currentTab === "chat" && (
           <>
-            <div ref={editor} className="relative">
+            <div
+              ref={editor}
+              className="bg-neutral-900 relative flex-1 overflow-hidden h-full flex flex-col gap-2 pb-3 px-3"
+            >
               <CopyIcon
                 className="size-4 absolute top-2 right-5 text-neutral-500 hover:text-neutral-300 z-2 cursor-pointer"
                 onClick={() => {
@@ -189,7 +192,7 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
                 language="html"
                 theme="vs-dark"
                 className={classNames(
-                  "h-[calc(100dvh-98px)] lg:h-full bg-neutral-900 transition-all duration-200 ",
+                  "max-lg:h-[calc(100%-82px)] h-full bg-neutral-900 transition-all duration-200 absolute left-0 top-0",
                   {
                     "pointer-events-none": isAiWorking,
                   }

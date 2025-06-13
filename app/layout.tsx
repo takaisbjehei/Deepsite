@@ -52,7 +52,6 @@ export const metadata: Metadata = {
     title: "DeepSite",
     statusBarStyle: "black-translucent",
   },
-  themeColor: "#000000",
   icons: {
     icon: "/logo.svg",
     shortcut: "/logo.svg",
@@ -91,7 +90,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${ptSans.variable} antialiased bg-black dark`}
+        className={`${inter.variable} ${ptSans.variable} antialiased bg-black dark h-[100dvh] overflow-hidden`}
       >
         <Toaster richColors position="bottom-center" />
         <TanstackProvider>

@@ -20,7 +20,7 @@ export const UserMenu = ({ className }: { className?: string }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className={`${className}`}>
-          <Avatar className="size-7 mr-1">
+          <Avatar className="size-8 mr-1">
             <AvatarImage src={user?.avatarUrl} alt="@shadcn" />
             <AvatarFallback className="text-sm">
               {user?.fullname?.charAt(0).toUpperCase() ?? "E"}
