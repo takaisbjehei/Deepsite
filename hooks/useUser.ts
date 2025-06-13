@@ -66,14 +66,7 @@ export const useUser = (initialData?: {
               : undefined,
             sameSite: "none",
             secure: true,
-            httpOnly: false,
           });
-          //         res.cookie("hf_token", response.access_token, {
-          //   httpOnly: false,
-          //   secure: true,
-          //   sameSite: "none",
-          //   maxAge: 30 * 24 * 60 * 60 * 1000,
-          // });
           client.setQueryData(["user.me"], {
             user: res.data.user,
             errCode: null,
