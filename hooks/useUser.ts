@@ -64,7 +64,16 @@ export const useUser = (initialData?: {
             expires: res.data.expires_in
               ? new Date(Date.now() + res.data.expires_in * 1000)
               : undefined,
+            sameSite: "none",
+            secure: true,
+            httpOnly: false,
           });
+          //         res.cookie("hf_token", response.access_token, {
+          //   httpOnly: false,
+          //   secure: true,
+          //   sameSite: "none",
+          //   maxAge: 30 * 24 * 60 * 60 * 1000,
+          // });
           client.setQueryData(["user.me"], {
             user: res.data.user,
             errCode: null,
