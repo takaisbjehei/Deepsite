@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import Loading from "@/components/loading";
+import { api } from "@/lib/api";
 
 export function ReImagine({
   onRedesign,
@@ -29,6 +30,7 @@ export function ReImagine({
   };
 
   const handleClick = async () => {
+    if (isLoading) return; // Prevent multiple clicks while loading
     if (!url) {
       toast.error("Please enter a URL.");
       return;
@@ -37,24 +39,25 @@ export function ReImagine({
       toast.error("Please enter a valid URL.");
       return;
     }
+    // TODO implement the API call to redesign the site
     // Here you would typically handle the re-design logic
     setIsLoading(true);
-    const request = await fetch("/api/re-design", {
-      method: "POST",
-      body: JSON.stringify({ url }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const response = await request.json();
-    if (response.ok) {
-      setOpen(false);
-      setUrl("");
-      onRedesign(response.markdown);
-      toast.success("DeepSite is redesigning your site! Let him cook... 🔥");
-    } else {
-      toast.error(response.message || "Failed to redesign the site.");
-    }
+    // const request = await api.post("/api/re-design", {
+    //   method: "POST",
+    //   body: JSON.stringify({ url }),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // const response = await request.json();
+    // if (response.ok) {
+    //   setOpen(false);
+    //   setUrl("");
+    //   onRedesign(response.markdown);
+    //   toast.success("DeepSite is redesigning your site! Let him cook... 🔥");
+    // } else {
+    //   toast.error(response.message || "Failed to redesign the site.");
+    // }
     setIsLoading(false);
   };
 
@@ -126,10 +129,20 @@ export function ReImagine({
                 variant="black"
                 onClick={handleClick}
                 className="relative w-full"
-                disabled={isLoading}
               >
-                Redesign <Paintbrush className="size-4" />
-                {isLoading && <Loading className="ml-2 size-4 animate-spin" />}
+                {isLoading ? (
+                  <>
+                    <Loading
+                      overlay={false}
+                      className="ml-2 size-4 animate-spin"
+                    />
+                    Fetching your site...
+                  </>
+                ) : (
+                  <>
+                    Redesign <Paintbrush className="size-4" />
+                  </>
+                )}
               </Button>
             </div>
           </main>

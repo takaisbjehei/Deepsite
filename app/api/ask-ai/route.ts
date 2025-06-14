@@ -223,7 +223,7 @@ export async function PUT(request: NextRequest) {
   const userToken = request.cookies.get(MY_TOKEN_KEY())?.value;
 
   const body = await request.json();
-  const { prompt, html, previousPrompt, provider } = body;
+  const { prompt, html, previousPrompt, provider, selectedElementHtml } = body;
 
   if (!prompt || !html) {
     return NextResponse.json(
@@ -294,7 +294,9 @@ export async function PUT(request: NextRequest) {
           },
           {
             role: "assistant",
-            content: `The current code is: \n\`\`\`html\n${html}\n\`\`\``,
+            content: selectedElementHtml
+              ? `Here is the selected HTML element:\n\n${selectedElementHtml}`
+              : `The current code is: \n\`\`\`html\n${html}\n\`\`\``,
           },
           {
             role: "user",

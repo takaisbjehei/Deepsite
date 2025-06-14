@@ -1,9 +1,12 @@
 "use client";
+import { useUpdateEffect } from "react-use";
+import { useMemo, useState } from "react";
 import classNames from "classnames";
 import { toast } from "sonner";
 
 import { cn } from "@/lib/utils";
 import { GridPattern } from "@/components/magic-ui/grid-pattern";
+import { htmlTagToText } from "@/lib/html-tag-to-text";
 
 export const Preview = ({
   html,
@@ -13,6 +16,8 @@ export const Preview = ({
   device,
   currentTab,
   iframeRef,
+  isEditableModeEnabled,
+  onClickElement,
 }: {
   html: string;
   isResizing: boolean;
@@ -21,7 +26,80 @@ export const Preview = ({
   iframeRef?: React.RefObject<HTMLIFrameElement | null>;
   device: "desktop" | "mobile";
   currentTab: string;
+  isEditableModeEnabled?: boolean;
+  onClickElement?: (element: HTMLElement) => void;
 }) => {
+  const [hoveredElement, setHoveredElement] = useState<HTMLElement | null>(
+    null
+  );
+
+  // add event listener to the iframe to track hovered elements
+  const handleMouseOver = (event: MouseEvent) => {
+    if (iframeRef?.current) {
+      const iframeDocument = iframeRef.current.contentDocument;
+      if (iframeDocument) {
+        const targetElement = event.target as HTMLElement;
+        if (
+          hoveredElement !== targetElement &&
+          targetElement !== iframeDocument.body
+        ) {
+          setHoveredElement(targetElement);
+          targetElement.classList.add("hovered-element");
+        } else {
+          return setHoveredElement(null);
+        }
+      }
+    }
+  };
+  const handleMouseOut = () => {
+    setHoveredElement(null);
+  };
+  const handleClick = (event: MouseEvent) => {
+    if (iframeRef?.current) {
+      const iframeDocument = iframeRef.current.contentDocument;
+      if (iframeDocument) {
+        const targetElement = event.target as HTMLElement;
+        if (targetElement !== iframeDocument.body) {
+          onClickElement?.(targetElement);
+        }
+      }
+    }
+  };
+
+  useUpdateEffect(() => {
+    const cleanupListeners = () => {
+      if (iframeRef?.current?.contentDocument) {
+        const iframeDocument = iframeRef.current.contentDocument;
+        iframeDocument.removeEventListener("mouseover", handleMouseOver);
+        iframeDocument.removeEventListener("mouseout", handleMouseOut);
+        iframeDocument.removeEventListener("click", handleClick);
+      }
+    };
+
+    if (iframeRef?.current) {
+      const iframeDocument = iframeRef.current.contentDocument;
+      if (iframeDocument) {
+        // Clean up existing listeners first
+        cleanupListeners();
+
+        if (isEditableModeEnabled) {
+          iframeDocument.addEventListener("mouseover", handleMouseOver);
+          iframeDocument.addEventListener("mouseout", handleMouseOut);
+          iframeDocument.addEventListener("click", handleClick);
+        }
+      }
+    }
+
+    // Clean up when component unmounts or dependencies change
+    return cleanupListeners;
+  }, [iframeRef, isEditableModeEnabled]);
+
+  const selectedElement = useMemo(() => {
+    if (!isEditableModeEnabled) return null;
+    if (!hoveredElement) return null;
+    return hoveredElement;
+  }, [hoveredElement, isEditableModeEnabled]);
+
   return (
     <div
       ref={ref}
@@ -49,6 +127,27 @@ export const Preview = ({
           "[mask-image:radial-gradient(900px_circle_at_center,white,transparent)]"
         )}
       />
+      {!isAiWorking && hoveredElement && selectedElement && (
+        <div
+          className="cursor-pointer absolute bg-sky-500/10 border-[2px] border-dashed border-sky-500 rounded-r-lg rounded-b-lg p-3 z-10 pointer-events-none"
+          style={{
+            top:
+              selectedElement.getBoundingClientRect().top +
+              (iframeRef?.current?.contentWindow?.scrollY || 0) +
+              24,
+            left:
+              selectedElement.getBoundingClientRect().left +
+              (iframeRef?.current?.contentWindow?.scrollX || 0) +
+              24,
+            width: selectedElement.getBoundingClientRect().width,
+            height: selectedElement.getBoundingClientRect().height,
+          }}
+        >
+          <span className="bg-sky-500 rounded-t-md text-sm text-neutral-100 px-2 py-0.5 -translate-y-7 absolute top-0 left-0">
+            {htmlTagToText(selectedElement.tagName.toLowerCase())}
+          </span>
+        </div>
+      )}
       <iframe
         id="preview-iframe"
         ref={iframeRef}

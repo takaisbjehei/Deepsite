@@ -85,7 +85,7 @@ export default function Navigation() {
         }
       )}
     >
-      <nav className="grid grid-cols-3 p-4 container mx-auto">
+      <nav className="grid grid-cols-2 p-4 container mx-auto">
         <Link href="/" className="flex items-center gap-1">
           <Image
             src={Logo}
@@ -96,7 +96,7 @@ export default function Navigation() {
           />
           <p className="font-sans text-white text-xl font-bold">DeepSite</p>
         </Link>
-        <ul className="flex items-center justify-center gap-6">
+        <ul className="items-center justify-center gap-6 hidden">
           {navigationLinks.map((link) => (
             <li
               key={link.name}

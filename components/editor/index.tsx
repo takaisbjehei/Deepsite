@@ -47,6 +47,10 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop");
   const [isResizing, setIsResizing] = useState(false);
   const [isAiWorking, setIsAiWorking] = useState(false);
+  const [isEditableModeEnabled, setIsEditableModeEnabled] = useState(false);
+  const [selectedElement, setSelectedElement] = useState<HTMLElement | null>(
+    null
+  );
 
   /**
    * Resets the layout based on screen size
@@ -158,6 +162,7 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
         resizer.current.addEventListener("mousedown", handleMouseDown);
       }
     } else {
+      setIsEditableModeEnabled(false);
       if (preview.current) {
         // Reset preview width when switching to preview tab
         preview.current.style.width = "100%";
@@ -234,6 +239,7 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
                     prompt: p,
                   });
                   setHtmlHistory(currentHistory);
+                  setSelectedElement(null);
                   // if xs or sm
                   if (window.innerWidth <= 1024) {
                     setCurrentTab("preview");
@@ -269,6 +275,10 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
                     editorRef.current?.getModel()?.getLineCount() ?? 0
                   );
                 }}
+                isEditableModeEnabled={isEditableModeEnabled}
+                setIsEditableModeEnabled={setIsEditableModeEnabled}
+                selectedElement={selectedElement}
+                setSelectedElement={setSelectedElement}
               />
             </div>
             <div
@@ -284,7 +294,12 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
           ref={preview}
           device={device}
           currentTab={currentTab}
+          isEditableModeEnabled={isEditableModeEnabled}
           iframeRef={iframeRef}
+          onClickElement={(element) => {
+            setIsEditableModeEnabled(false);
+            setSelectedElement(element);
+          }}
         />
       </main>
       <Footer
