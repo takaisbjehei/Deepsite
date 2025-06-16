@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
-  const redirect_uri = process.env.REDIRECT_URI;
+export async function GET(req: NextRequest) {
+  const host =
+    req.headers.get("host") ?? req.headers.get("origin") ?? "localhost:3000";
+  const redirect_uri =
+    `${host.includes("localhost") ? "http://" : "https://"}` +
+    host +
+    "/auth/callback";
   const loginRedirectUrl = `https://huggingface.co/oauth/authorize?client_id=${process.env.HUGGINGFACE_CLIENT_ID}&redirect_uri=${redirect_uri}&response_type=code&scope=openid%20profile%20write-repos%20manage-repos%20inference-api&prompt=consent&state=1234567890`;
 
   return NextResponse.json(
@@ -37,7 +42,12 @@ export async function POST(req: NextRequest) {
     `${process.env.HUGGINGFACE_CLIENT_ID}:${process.env.HUGGINGFACE_CLIENT_SECRET}`
   ).toString("base64")}`;
 
-  const redirect_uri = process.env.REDIRECT_URI as string;
+  const host =
+    req.headers.get("host") ?? req.headers.get("origin") ?? "localhost:3000";
+  const redirect_uri =
+    `${host.includes("localhost") ? "http://" : "https://"}` +
+    host +
+    "/auth/callback";
   const request_auth = await fetch("https://huggingface.co/oauth/token", {
     method: "POST",
     headers: {
