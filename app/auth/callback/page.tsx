@@ -1,28 +1,60 @@
 "use client";
-
+import { useUser } from "@/hooks/useUser";
 import { use } from "react";
-import { useBroadcastChannel } from "@/lib/useBroadcastChannel";
 import { useMount } from "react-use";
 
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 export default function AuthCallback({
   searchParams,
 }: {
   searchParams: Promise<{ code: string }>;
 }) {
   const { code } = use(searchParams);
+  const { loginFromCode } = useUser();
 
-  const { postMessage } = useBroadcastChannel("auth", () => {});
-  useMount(() => {
-    console.log("AuthCallback mounted", code);
+  useMount(async () => {
     if (code) {
-      postMessage({
-        code: code,
-        type: "user-oauth",
-      });
-      // window.close();
-      return;
+      await loginFromCode(code);
     }
   });
 
-  return <div>Login in progress ...</div>;
+  return (
+    <div className="h-screen flex flex-col justify-center items-center">
+      <div className="!rounded-2xl !p-0 !bg-white !border-neutral-100 min-w-xs text-center overflow-hidden ring-[8px] ring-white/20">
+        <header className="bg-neutral-50 p-6 border-b border-neutral-200/60">
+          <div className="flex items-center justify-center -space-x-4 mb-3">
+            <div className="size-9 rounded-full bg-pink-200 shadow-2xs flex items-center justify-center text-xl opacity-50">
+              🚀
+            </div>
+            <div className="size-11 rounded-full bg-amber-200 shadow-2xl flex items-center justify-center text-2xl z-2">
+              👋
+            </div>
+            <div className="size-9 rounded-full bg-sky-200 shadow-2xs flex items-center justify-center text-xl opacity-50">
+              🙌
+            </div>
+          </div>
+          <p className="text-xl font-semibold text-neutral-950">
+            Login In Progress...
+          </p>
+          <p className="text-sm text-neutral-500 mt-1.5">
+            Wait a moment while we log you in with your code.
+          </p>
+        </header>
+        <main className="space-y-4 p-6">
+          <div>
+            <p className="text-sm text-neutral-700 mb-4 max-w-xs">
+              If you are not redirected automatically, please click the button
+              below:
+            </p>
+            <Link href="/">
+              <Button variant="black" className="relative">
+                Go to Home
+              </Button>
+            </Link>
+          </div>
+        </main>
+      </div>
+    </div>
+  );
 }

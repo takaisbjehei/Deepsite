@@ -17,6 +17,7 @@ export const useUser = (initialData?: {
   const client = useQueryClient();
   const router = useRouter();
   const [, setCookie, removeCookie] = useCookie(cookie_name);
+  const [currentRoute, setCurrentRoute] = useCookie("deepsite-currentRoute");
 
   const { data: { user, errCode } = { user: null, errCode: null }, isLoading } =
     useQuery({
@@ -46,11 +47,8 @@ export const useUser = (initialData?: {
   };
 
   const openLoginWindow = async () => {
-    return window.open(
-      "/auth",
-      "Login to DeepSite",
-      "menubar=no,width=500,height=777,location=no,resizable=no,scrollbars=yes,status=no"
-    );
+    setCurrentRoute(window.location.pathname);
+    return router.push("/auth");
   };
 
   const loginFromCode = async (code: string) => {
@@ -60,7 +58,6 @@ export const useUser = (initialData?: {
       .post("/auth", { code })
       .then(async (res: any) => {
         if (res.data) {
-          // fix to be able to set the cookie through the space (Hugging Face)
           setCookie(res.data.access_token, {
             expires: res.data.expires_in
               ? new Date(Date.now() + res.data.expires_in * 1000)
@@ -72,6 +69,12 @@ export const useUser = (initialData?: {
             user: res.data.user,
             errCode: null,
           });
+          if (currentRoute) {
+            router.push(currentRoute);
+            setCurrentRoute("");
+          } else {
+            router.push("/projects");
+          }
           toast.success("Login successful");
         }
       })

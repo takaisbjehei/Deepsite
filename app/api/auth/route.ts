@@ -1,8 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-// import { cookies } from "next/headers";
-// import MY_TOKEN_KEY from "@/lib/get-cookie-name";
-
-// TODO refacto to do not use the window.postMessage, doesn't work with iFrame
 
 export async function GET() {
   const redirect_uri = process.env.REDIRECT_URI;
@@ -81,13 +77,6 @@ export async function POST(req: NextRequest) {
     );
   }
   const user = await userResponse.json();
-  // const cookieStore = await cookies();
-  // cookieStore.set(MY_TOKEN_KEY(), response.access_token, {
-  //   maxAge: response.expires_in,
-  //   httpOnly: false,
-  //   secure: true,
-  //   sameSite: "lax",
-  // });
 
   return NextResponse.json(
     {
