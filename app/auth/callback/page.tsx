@@ -1,7 +1,7 @@
 "use client";
 import { useUser } from "@/hooks/useUser";
-import { use } from "react";
-import { useMount } from "react-use";
+import { use, useState } from "react";
+import { useMount, useTimeoutFn } from "react-use";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -10,6 +10,7 @@ export default function AuthCallback({
 }: {
   searchParams: Promise<{ code: string }>;
 }) {
+  const [showButton, setShowButton] = useState(false);
   const { code } = use(searchParams);
   const { loginFromCode } = useUser();
 
@@ -18,6 +19,11 @@ export default function AuthCallback({
       await loginFromCode(code);
     }
   });
+
+  useTimeoutFn(
+    () => setShowButton(true),
+    7000 // Show button after 5 seconds
+  );
 
   return (
     <div className="h-screen flex flex-col justify-center items-center">
@@ -44,14 +50,20 @@ export default function AuthCallback({
         <main className="space-y-4 p-6">
           <div>
             <p className="text-sm text-neutral-700 mb-4 max-w-xs">
-              If you are not redirected automatically, please click the button
-              below:
+              If you are not redirected automatically in the next 5 seconds,
+              please click the button below
             </p>
-            <Link href="/">
-              <Button variant="black" className="relative">
-                Go to Home
-              </Button>
-            </Link>
+            {showButton ? (
+              <Link href="/">
+                <Button variant="black" className="relative">
+                  Go to Home
+                </Button>
+              </Link>
+            ) : (
+              <p className="text-xs text-neutral-500">
+                Please wait, we are logging you in...
+              </p>
+            )}
           </div>
         </main>
       </div>
