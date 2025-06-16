@@ -283,44 +283,7 @@ export function AskAI({
 
   return (
     <>
-      <div className="ml-auto select-none text-xs text-neutral-400 flex items-center justify-center gap-2 bg-neutral-800 border border-neutral-700 rounded-md p-1 pr-2.5 max-w-max">
-        <label
-          htmlFor="follow-up-checkbox"
-          className="flex items-center gap-1.5 cursor-pointer"
-        >
-          <Checkbox
-            id="follow-up-checkbox"
-            checked={isFollowUp}
-            onCheckedChange={(e) => {
-              setIsFollowUp(e === true);
-            }}
-          />
-          Follow-Up
-        </label>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Info className="size-3 text-neutral-300 cursor-pointer" />
-          </PopoverTrigger>
-          <PopoverContent
-            align="start"
-            className="!rounded-2xl !p-0 min-w-xs text-center overflow-hidden"
-          >
-            <header className="bg-neutral-950 px-4 py-3 border-b border-neutral-700/70">
-              <p className="text-base text-neutral-200 font-semibold">
-                What is a Follow-Up?
-              </p>
-            </header>
-            <main className="p-4">
-              <p className="text-sm text-neutral-400">
-                A Follow-Up is a request to DeepSite to edit the current HTML
-                instead of starting from scratch. This is useful when you want
-                to make small changes or improvements to the existing design.
-              </p>
-            </main>
-          </PopoverContent>
-        </Popover>
-      </div>
-      <div className="bg-neutral-800 border border-neutral-700 rounded-2xl ring-[4px] focus-within:ring-neutral-500/30 focus-within:border-neutral-600 ring-transparent z-10 w-full group">
+      <div className="relative bg-neutral-800 border border-neutral-700 rounded-2xl ring-[4px] focus-within:ring-neutral-500/30 focus-within:border-neutral-600 ring-transparent z-10 w-full group">
         {think && (
           <div className="w-full border-b border-neutral-700 relative overflow-hidden">
             <header
@@ -358,10 +321,11 @@ export function AskAI({
             </main>
           </div>
         )}
-        {!isAiWorking && selectedElement && (
+        {selectedElement && (
           <div className="px-4 pt-3">
             <SelectedHtmlElement
               element={selectedElement}
+              isAiWorking={isAiWorking}
               onDelete={() => setSelectedElement(null)}
             />
           </div>
@@ -466,6 +430,43 @@ export function AskAI({
           open={openProModal}
           onClose={() => setOpenProModal(false)}
         />
+        <div className="absolute top-0 right-0 -translate-y-[calc(100%+8px)] select-none text-xs text-neutral-400 flex items-center justify-center gap-2 bg-neutral-800 border border-neutral-700 rounded-md p-1 pr-2.5">
+          <label
+            htmlFor="follow-up-checkbox"
+            className="flex items-center gap-1.5 cursor-pointer"
+          >
+            <Checkbox
+              id="follow-up-checkbox"
+              checked={isFollowUp}
+              onCheckedChange={(e) => {
+                setIsFollowUp(e === true);
+              }}
+            />
+            Follow-Up
+          </label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Info className="size-3 text-neutral-300 cursor-pointer" />
+            </PopoverTrigger>
+            <PopoverContent
+              align="start"
+              className="!rounded-2xl !p-0 min-w-xs text-center overflow-hidden"
+            >
+              <header className="bg-neutral-950 px-4 py-3 border-b border-neutral-700/70">
+                <p className="text-base text-neutral-200 font-semibold">
+                  What is a Follow-Up?
+                </p>
+              </header>
+              <main className="p-4">
+                <p className="text-sm text-neutral-400">
+                  A Follow-Up is a request to DeepSite to edit the current HTML
+                  instead of starting from scratch. This is useful when you want
+                  to make small changes or improvements to the existing design.
+                </p>
+              </main>
+            </PopoverContent>
+          </Popover>
+        </div>
       </div>
       <audio ref={audio} id="audio" className="hidden">
         <source src="/success.mp3" type="audio/mpeg" />

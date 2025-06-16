@@ -39,25 +39,18 @@ export function ReImagine({
       toast.error("Please enter a valid URL.");
       return;
     }
-    // TODO implement the API call to redesign the site
-    // Here you would typically handle the re-design logic
     setIsLoading(true);
-    // const request = await api.post("/api/re-design", {
-    //   method: "POST",
-    //   body: JSON.stringify({ url }),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // const response = await request.json();
-    // if (response.ok) {
-    //   setOpen(false);
-    //   setUrl("");
-    //   onRedesign(response.markdown);
-    //   toast.success("DeepSite is redesigning your site! Let him cook... 🔥");
-    // } else {
-    //   toast.error(response.message || "Failed to redesign the site.");
-    // }
+    const response = await api.put("/re-design", {
+      url: url.trim(),
+    });
+    if (response?.data?.ok) {
+      setOpen(false);
+      setUrl("");
+      onRedesign(response.data.markdown);
+      toast.success("DeepSite is redesigning your site! Let him cook... 🔥");
+    } else {
+      toast.error(response?.data?.error || "Failed to redesign the site.");
+    }
     setIsLoading(false);
   };
 

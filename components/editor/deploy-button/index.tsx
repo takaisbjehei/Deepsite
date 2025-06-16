@@ -67,11 +67,11 @@ export function DeployButton({
           <Popover>
             <PopoverTrigger asChild>
               <div>
-                <Button variant="sky" className="max-lg:hidden !px-4">
+                <Button variant="default" className="max-lg:hidden !px-4">
                   <MdSave className="size-4" />
                   Save your Project
                 </Button>
-                <Button variant="sky" size="sm" className="lg:hidden">
+                <Button variant="default" size="sm" className="lg:hidden">
                   Deploy
                 </Button>
               </div>

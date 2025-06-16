@@ -197,7 +197,7 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
                 language="html"
                 theme="vs-dark"
                 className={classNames(
-                  "max-lg:h-[calc(100%-82px)] h-full bg-neutral-900 transition-all duration-200 absolute left-0 top-0",
+                  "h-full bg-neutral-900 transition-all duration-200 absolute left-0 top-0",
                   {
                     "pointer-events-none": isAiWorking,
                   }
@@ -210,6 +210,7 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
                   scrollbar: {
                     horizontal: "hidden",
                   },
+                  wordWrap: "on",
                 }}
                 value={html}
                 onChange={(value) => {

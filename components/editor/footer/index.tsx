@@ -83,7 +83,7 @@ export function Footer({
             <span className="max-lg:hidden">DeepSite Gallery</span>
           </Button>
         </a>
-        <Button size="sm" variant="default" onClick={handleRefreshIframe}>
+        <Button size="sm" variant="outline" onClick={handleRefreshIframe}>
           <RefreshCcw className="size-3.5" />
           <span className="max-lg:hidden">Refresh Preview</span>
         </Button>

@@ -1,12 +1,16 @@
+import classNames from "classnames";
+import { Code, XCircle } from "lucide-react";
+
 import { Collapsible, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { htmlTagToText } from "@/lib/html-tag-to-text";
-import { Code, XCircle } from "lucide-react";
 
 export const SelectedHtmlElement = ({
   element,
+  isAiWorking = false,
   onDelete,
 }: {
   element: HTMLElement | null;
+  isAiWorking: boolean;
   onDelete?: () => void;
 }) => {
   if (!element) return null;
@@ -14,8 +18,19 @@ export const SelectedHtmlElement = ({
   const tagName = element.tagName.toLowerCase();
   return (
     <Collapsible
-      className="border border-neutral-700 rounded-xl p-1.5 pr-3 max-w-max hover:brightness-110 transition-all duration-200 ease-in-out !cursor-pointer"
-      onClick={onDelete}
+      className={classNames(
+        "border border-neutral-700 rounded-xl p-1.5 pr-3 max-w-max hover:brightness-110 transition-all duration-200 ease-in-out !cursor-pointer",
+        {
+          "!cursor-pointer": !isAiWorking,
+          "opacity-50 !cursor-not-allowed": isAiWorking,
+        }
+      )}
+      disabled={isAiWorking}
+      onClick={() => {
+        if (!isAiWorking && onDelete) {
+          onDelete();
+        }
+      }}
     >
       <CollapsibleTrigger className="flex items-center justify-start gap-2 cursor-pointer">
         <div className="rounded-lg bg-neutral-700 size-6 flex items-center justify-center">

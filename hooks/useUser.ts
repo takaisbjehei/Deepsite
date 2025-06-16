@@ -54,7 +54,6 @@ export const useUser = (initialData?: {
   };
 
   const loginFromCode = async (code: string) => {
-    console.log("Login from code => ", code);
     setLoadingAuth(true);
     if (loadingAuth) return;
     await api

@@ -9,9 +9,6 @@ import { Button } from "@/components/ui/button";
 export const AskAi = () => {
   return (
     <>
-      <div className="bg-red-500 flex items-center justify-end">
-        No Follow-up mode
-      </div>
       <div className="bg-neutral-800 border border-neutral-700 rounded-2xl ring-[4px] focus-within:ring-neutral-500/30 focus-within:border-neutral-600 ring-transparent group">
         <textarea
           rows={3}

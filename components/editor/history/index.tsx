@@ -51,14 +51,15 @@ export function History({
                       })}
                   </span>
                 </div>
-                <button
-                  className="bg-pink-500 text-white text-xs font-medium rounded-md px-2 py-1 transition-all duration-100 hover:bg-pink-600 cursor-pointer"
+                <Button
+                  variant="sky"
+                  size="xs"
                   onClick={() => {
                     setHtml(item.html);
                   }}
                 >
                   Select
-                </button>
+                </Button>
               </li>
             ))}
           </ul>

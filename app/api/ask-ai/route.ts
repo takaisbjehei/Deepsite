@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
   const userToken = request.cookies.get(MY_TOKEN_KEY())?.value;
 
   const body = await request.json();
-  const { prompt, provider, model, redesignMarkdown } = body;
+  const { prompt, provider, model, redesignMarkdown, html } = body;
 
   if (!model || (!prompt && !redesignMarkdown)) {
     return NextResponse.json(
@@ -107,7 +107,6 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // Process in background
     (async () => {
       let completeResponse = "";
       try {
@@ -125,6 +124,8 @@ export async function POST(request: NextRequest) {
                 role: "user",
                 content: redesignMarkdown
                   ? `Here is my current design as a markdown:\n\n${redesignMarkdown}\n\nNow, please create a new design based on this markdown.`
+                  : html
+                  ? `Here is my current HTML code:\n\n\`\`\`html\n${html}\n\`\`\`\n\nNow, please create a new design based on this HTML.`
                   : prompt,
               },
             ],
@@ -294,9 +295,12 @@ export async function PUT(request: NextRequest) {
           },
           {
             role: "assistant",
-            content: selectedElementHtml
-              ? `Here is the selected HTML element:\n\n${selectedElementHtml}`
-              : `The current code is: \n\`\`\`html\n${html}\n\`\`\``,
+
+            content: `The current code is: \n\`\`\`html\n${html}\n\`\`\` ${
+              selectedElementHtml
+                ? `\n\nYou have to update ONLY the following element, NOTHING ELSE: \n\n\`\`\`html\n${selectedElementHtml}\n\`\`\``
+                : ""
+            }`,
           },
           {
             role: "user",
