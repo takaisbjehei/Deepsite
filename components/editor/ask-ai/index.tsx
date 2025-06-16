@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import classNames from "classnames";
 import { toast } from "sonner";
 import { useLocalStorage, useUpdateEffect } from "react-use";
-import { ArrowUp, ChevronDown, Info, Crosshair } from "lucide-react";
+import { ArrowUp, ChevronDown, Crosshair } from "lucide-react";
 import { FaStopCircle } from "react-icons/fa";
 
 import { defaultHTML } from "@/lib/consts";
@@ -12,20 +12,16 @@ import ProModal from "@/components/pro-modal";
 import { Button } from "@/components/ui/button";
 import { MODELS } from "@/lib/providers";
 import { HtmlHistory } from "@/types";
-// import { InviteFriends } from "@/components/invite-friends";
+import { InviteFriends } from "@/components/invite-friends";
 import { Settings } from "@/components/editor/ask-ai/settings";
 import { LoginModal } from "@/components/login-modal";
 import { ReImagine } from "@/components/editor/ask-ai/re-imagine";
 import Loading from "@/components/loading";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import { TooltipContent } from "@radix-ui/react-tooltip";
 import { SelectedHtmlElement } from "./selected-html-element";
+import { FollowUpTooltip } from "./follow-up-tooltip";
 
 export function AskAI({
   html,
@@ -403,6 +399,7 @@ export function AskAI({
                 </TooltipContent>
               </Tooltip>
             )}
+            <InviteFriends />
           </div>
           <div className="flex items-center justify-end gap-2">
             <Settings
@@ -444,28 +441,7 @@ export function AskAI({
             />
             Follow-Up
           </label>
-          <Popover>
-            <PopoverTrigger asChild>
-              <Info className="size-3 text-neutral-300 cursor-pointer" />
-            </PopoverTrigger>
-            <PopoverContent
-              align="start"
-              className="!rounded-2xl !p-0 min-w-xs text-center overflow-hidden"
-            >
-              <header className="bg-neutral-950 px-4 py-3 border-b border-neutral-700/70">
-                <p className="text-base text-neutral-200 font-semibold">
-                  What is a Follow-Up?
-                </p>
-              </header>
-              <main className="p-4">
-                <p className="text-sm text-neutral-400">
-                  A Follow-Up is a request to DeepSite to edit the current HTML
-                  instead of starting from scratch. This is useful when you want
-                  to make small changes or improvements to the existing design.
-                </p>
-              </main>
-            </PopoverContent>
-          </Popover>
+          <FollowUpTooltip />
         </div>
       </div>
       <audio ref={audio} id="audio" className="hidden">
