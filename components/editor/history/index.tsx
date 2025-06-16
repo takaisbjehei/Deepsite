@@ -1,3 +1,4 @@
+import { History as HistoryIcon } from "lucide-react";
 import { HtmlHistory } from "@/types";
 import {
   Popover,
@@ -17,6 +18,7 @@ export function History({
     <Popover>
       <PopoverTrigger asChild>
         <Button variant="ghost" size="sm" className="max-lg:hidden">
+          <HistoryIcon className="size-4 text-neutral-300" />
           {history?.length} edit{history.length !== 1 ? "s" : ""}
         </Button>
       </PopoverTrigger>
