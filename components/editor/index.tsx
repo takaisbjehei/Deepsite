@@ -184,7 +184,7 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
           <>
             <div
               ref={editor}
-              className="bg-neutral-900 relative flex-1 overflow-hidden h-full flex flex-col gap-2 pb-3 px-3"
+              className="bg-neutral-900 relative flex-1 overflow-hidden h-full flex flex-col gap-2 pb-3"
             >
               <CopyIcon
                 className="size-4 absolute top-2 right-5 text-neutral-500 hover:text-neutral-300 z-2 cursor-pointer"

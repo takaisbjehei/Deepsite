@@ -147,12 +147,11 @@ export const Preview = ({
         ref={iframeRef}
         title="output"
         className={classNames(
-          "w-full select-none transition-all duration-200 bg-black",
+          "w-full select-none transition-all duration-200 bg-black h-full",
           {
             "pointer-events-none": isResizing || isAiWorking,
-            "lg:max-w-md lg:mx-auto lg:h-[80dvh] lg:!rounded-[42px] lg:border-[8px] lg:border-neutral-700 lg:shadow-2xl":
+            "lg:max-w-md lg:mx-auto lg:!rounded-[42px] lg:border-[8px] lg:border-neutral-700 lg:shadow-2xl lg:h-[70dvh] lg:max-h-[996px]":
               device === "mobile",
-            "h-full": device === "desktop",
             "lg:border-[8px] lg:border-neutral-700 lg:shadow-2xl lg:rounded-[24px]":
               currentTab !== "preview" && device === "desktop",
           }

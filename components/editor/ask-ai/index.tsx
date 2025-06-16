@@ -282,7 +282,7 @@ export function AskAI({
   }, [isThinking]);
 
   return (
-    <>
+    <div className="px-3">
       <div className="relative bg-neutral-800 border border-neutral-700 rounded-2xl ring-[4px] focus-within:ring-neutral-500/30 focus-within:border-neutral-600 ring-transparent z-10 w-full group">
         {think && (
           <div className="w-full border-b border-neutral-700 relative overflow-hidden">
@@ -472,6 +472,6 @@ export function AskAI({
         <source src="/success.mp3" type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
-    </>
+    </div>
   );
 }
