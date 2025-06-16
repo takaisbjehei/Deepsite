@@ -19,7 +19,7 @@ export default function AuthCallback({
         code: code,
         type: "user-oauth",
       });
-      window.close();
+      // window.close();
       return;
     }
   });
