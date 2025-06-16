@@ -13,6 +13,7 @@ export default function AuthCallback({
 
   const { postMessage } = useBroadcastChannel("auth", () => {});
   useMount(() => {
+    console.log("AuthCallback mounted", code);
     if (code) {
       postMessage({
         code: code,

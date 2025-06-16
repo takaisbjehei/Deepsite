@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 // import { cookies } from "next/headers";
 // import MY_TOKEN_KEY from "@/lib/get-cookie-name";
 
+// TODO refacto to do not use the window.postMessage, doesn't work with iFrame
+
 export async function GET() {
   const redirect_uri = process.env.REDIRECT_URI;
   const loginRedirectUrl = `https://huggingface.co/oauth/authorize?client_id=${process.env.HUGGINGFACE_CLIENT_ID}&redirect_uri=${redirect_uri}&response_type=code&scope=openid%20profile%20write-repos%20manage-repos%20inference-api&prompt=consent&state=1234567890`;
