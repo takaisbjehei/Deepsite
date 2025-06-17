@@ -68,7 +68,7 @@ export async function POST(request: NextRequest) {
     authHeaders.get("x-forwarded-for")?.split(",")[0].trim() ||
     authHeaders.get("x-real-ip") ||
     "0.0.0.0";
-  console.log(authHeaders);
+  console.log(request.headers);
 
   if (!token) {
     ipAddresses.set(ip, (ipAddresses.get(ip) || 0) + 1);
