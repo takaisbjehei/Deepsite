@@ -141,7 +141,7 @@ export function DeployButton({
         ) : (
           <>
             <Button
-              variant="sky"
+              variant="default"
               className="max-lg:hidden !px-4"
               onClick={() => setOpen(true)}
             >
@@ -149,7 +149,7 @@ export function DeployButton({
               Save your Project
             </Button>
             <Button
-              variant="sky"
+              variant="default"
               size="sm"
               className="lg:hidden"
               onClick={() => setOpen(true)}
