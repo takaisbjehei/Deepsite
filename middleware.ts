@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const headers = new Headers(request.headers);
+  console.log("Middleware Headers:", request.nextUrl);
   headers.set("x-current-host", request.nextUrl.host);
   return NextResponse.next({ headers });
 }
