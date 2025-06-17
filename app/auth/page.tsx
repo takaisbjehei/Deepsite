@@ -1,16 +1,7 @@
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
 
-import { apiServer } from "@/lib/api";
-
-async function getLoginUrl() {
-  try {
-    const res = await apiServer.get("/auth");
-    return res.data;
-  } catch (error) {
-    return error;
-  }
-}
+import { getAuth } from "@/app/actions/auth";
 
 export const revalidate = 1;
 
@@ -19,9 +10,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Auth() {
-  const login = await getLoginUrl();
-  if (login?.redirect) {
-    redirect(login.redirect);
+  const loginRedirectUrl = await getAuth();
+  if (loginRedirectUrl) {
+    redirect(loginRedirectUrl);
   }
 
   return (

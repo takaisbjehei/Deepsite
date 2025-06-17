@@ -1,10 +1,10 @@
 "use client";
+import Link from "next/link";
 import { useUser } from "@/hooks/useUser";
 import { use, useState } from "react";
 import { useMount, useTimeoutFn } from "react-use";
 
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 export default function AuthCallback({
   searchParams,
 }: {
