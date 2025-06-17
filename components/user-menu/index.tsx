@@ -1,4 +1,10 @@
-import { ChartSpline, CirclePlus, FolderCode, LogOut } from "lucide-react";
+import {
+  ChartSpline,
+  CirclePlus,
+  FolderCode,
+  Import,
+  LogOut,
+} from "lucide-react";
 import Link from "next/link";
 
 import {
@@ -39,6 +45,12 @@ export const UserMenu = ({ className }: { className?: string }) => {
             <DropdownMenuItem>
               <CirclePlus className="size-4 text-neutral-100" />
               New Project
+            </DropdownMenuItem>
+          </Link>
+          <Link href="/projects">
+            <DropdownMenuItem>
+              <Import className="size-4 text-neutral-100" />
+              Import Project
             </DropdownMenuItem>
           </Link>
           <Link href="/projects">
