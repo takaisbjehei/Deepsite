@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
     token = process.env.HF_TOKEN;
   }
 
-  console.log(authHeaders);
+  console.log(request.headers);
 
   const ip = authHeaders.get("x-forwarded-for")?.includes(",")
     ? authHeaders.get("x-forwarded-for")?.split(",")[1].trim()
