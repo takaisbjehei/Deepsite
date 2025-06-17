@@ -64,8 +64,6 @@ export async function POST(request: NextRequest) {
     token = process.env.HF_TOKEN;
   }
 
-  console.log(request.headers);
-
   const ip = authHeaders.get("x-forwarded-for")?.includes(",")
     ? authHeaders.get("x-forwarded-for")?.split(",")[1].trim()
     : authHeaders.get("x-forwarded-for");
@@ -86,6 +84,8 @@ export async function POST(request: NextRequest) {
     token = process.env.DEFAULT_HF_TOKEN as string;
     billTo = "huggingface";
   }
+
+  console.log(ipAddresses);
 
   const DEFAULT_PROVIDER = PROVIDERS.novita;
   const selectedProvider =
@@ -202,7 +202,7 @@ export async function POST(request: NextRequest) {
           );
         }
       } finally {
-        await writer.close();
+        await writer?.close();
       }
     })();
 
@@ -251,6 +251,8 @@ export async function PUT(request: NextRequest) {
   const ip = authHeaders.get("x-forwarded-for")?.includes(",")
     ? authHeaders.get("x-forwarded-for")?.split(",")[1].trim()
     : authHeaders.get("x-forwarded-for");
+
+  console.log(ipAddresses);
 
   if (!token) {
     ipAddresses.set(ip, (ipAddresses.get(ip) || 0) + 1);
