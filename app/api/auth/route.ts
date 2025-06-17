@@ -5,7 +5,9 @@ export async function GET(req: NextRequest) {
     req.headers.get("host") ?? req.headers.get("origin") ?? "localhost:3000";
 
   console.log("Host:", req.headers.get("host"));
-  console.log("Origin:", req.headers.get("origin"));
+  console.log("Origin:", req.headers.get("x-forwarded-host"));
+
+  // get the domain from the request headers
   const redirect_uri =
     `${host.includes("localhost") ? "http://" : "https://"}` +
     host +
