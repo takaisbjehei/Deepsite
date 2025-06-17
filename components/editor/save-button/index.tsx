@@ -55,7 +55,7 @@ export function SaveButton({
   return (
     <>
       <Button
-        variant="sky"
+        variant="default"
         className="max-lg:hidden !px-4"
         onClick={updateSpace}
       >
@@ -64,7 +64,7 @@ export function SaveButton({
         {loading && <Loading className="ml-2 size-4 animate-spin" />}
       </Button>
       <Button
-        variant="sky"
+        variant="default"
         size="sm"
         className="lg:hidden"
         onClick={updateSpace}

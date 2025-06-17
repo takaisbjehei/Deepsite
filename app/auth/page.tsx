@@ -1,10 +1,18 @@
 import { redirect } from "next/navigation";
 import { Metadata } from "next";
+import { headers } from "next/headers";
+
 import { apiServer } from "@/lib/api";
 
 async function getLoginUrl() {
+  const headersList = await headers();
+  const pathname = headersList.get("x-current-host") || "/";
   try {
-    const res = await apiServer.get("/auth");
+    const res = await apiServer.get("/auth", {
+      headers: {
+        "x-current-host": pathname,
+      },
+    });
     return res.data;
   } catch (error) {
     return error;
