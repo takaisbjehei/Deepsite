@@ -41,11 +41,11 @@ export async function GET(
       additionalFields: ["author"],
     });
 
-    if (!space || space.sdk !== "static" || space.private) {
+    if (!space || space.sdk !== "static") {
       return NextResponse.json(
         {
           ok: false,
-          error: "Space is not a static space or is private",
+          error: "Space is not a static space",
         },
         { status: 404 }
       );
@@ -159,4 +159,77 @@ export async function PUT(
     }
   );
   return NextResponse.json({ ok: true }, { status: 200 });
+}
+
+export async function POST(
+  req: NextRequest,
+  { params }: { params: Promise<{ namespace: string; repoId: string }> }
+) {
+  const user = await isAuthenticated();
+
+  if (user instanceof NextResponse || !user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  await dbConnect();
+  const param = await params;
+  const { namespace, repoId } = param;
+
+  const space = await spaceInfo({
+    name: namespace + "/" + repoId,
+    accessToken: user.token as string,
+    additionalFields: ["author"],
+  });
+
+  if (!space || space.sdk !== "static") {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "Space is not a static space",
+      },
+      { status: 404 }
+    );
+  }
+  if (space.author !== user.name) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "Space does not belong to the authenticated user",
+      },
+      { status: 403 }
+    );
+  }
+
+  const project = await Project.findOne({
+    user_id: user.id,
+    space_id: `${namespace}/${repoId}`,
+  }).lean();
+  if (project) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: "Project already exists",
+      },
+      { status: 400 }
+    );
+  }
+
+  const newProject = new Project({
+    user_id: user.id,
+    space_id: `${namespace}/${repoId}`,
+    prompts: [],
+  });
+
+  await newProject.save();
+  return NextResponse.json(
+    {
+      ok: true,
+      project: {
+        id: newProject._id,
+        space_id: newProject.space_id,
+        prompts: newProject.prompts,
+      },
+    },
+    { status: 201 }
+  );
 }

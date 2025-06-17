@@ -3,7 +3,7 @@ import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { editor } from "monaco-editor";
 import Editor from "@monaco-editor/react";
-import { CopyIcon } from "lucide-react";
+import { CopyIcon, Import } from "lucide-react";
 import {
   useCopyToClipboard,
   useEvent,
@@ -24,10 +24,13 @@ import { AskAI } from "@/components/editor/ask-ai";
 import { DeployButton } from "./deploy-button";
 import { Project } from "@/types";
 import { SaveButton } from "./save-button";
+import { Button } from "@/components/ui/button";
+import { useUser } from "@/hooks/useUser";
 
 export const AppEditor = ({ project }: { project?: Project | null }) => {
   const [htmlStorage, , removeHtmlStorage] = useLocalStorage("html_content");
   const [, copyToClipboard] = useCopyToClipboard();
+  const { user, openLoginWindow } = useUser();
   const { html, setHtml, htmlHistory, setHtmlHistory, prompts, setPrompts } =
     useEditor(project?.html ?? (htmlStorage as string) ?? defaultHTML);
   // get query params from URL
@@ -173,6 +176,16 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
   return (
     <section className="h-[100dvh] bg-neutral-950 flex flex-col">
       <Header tab={currentTab} onNewTab={setCurrentTab}>
+        <Button
+          variant="outline"
+          onClick={() => {
+            if (user?.id) router.push("/projects");
+            else openLoginWindow();
+          }}
+        >
+          <Import className="size-4 mr-1.5" />
+          Load Project
+        </Button>
         {project?._id ? (
           <SaveButton html={html} prompts={prompts} />
         ) : (
