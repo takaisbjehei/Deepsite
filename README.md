@@ -4,7 +4,7 @@ emoji: 🐳
 colorFrom: blue
 colorTo: blue
 sdk: docker
-pinned: false
+pinned: true
 app_port: 3000
 license: mit
 short_description: Generate any application with DeepSeek
