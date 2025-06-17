@@ -3,6 +3,9 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   const host =
     req.headers.get("host") ?? req.headers.get("origin") ?? "localhost:3000";
+
+  console.log("Host:", req.headers.get("host"));
+  console.log("Origin:", req.headers.get("origin"));
   const redirect_uri =
     `${host.includes("localhost") ? "http://" : "https://"}` +
     host +
