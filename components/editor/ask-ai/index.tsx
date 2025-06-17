@@ -135,6 +135,7 @@ export function AskAI({
             prompt,
             provider,
             model,
+            html: html === defaultHTML ? "" : html,
             redesignMarkdown,
           }),
           headers: {
