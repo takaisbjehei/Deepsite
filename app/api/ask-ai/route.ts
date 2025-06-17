@@ -85,8 +85,6 @@ export async function POST(request: NextRequest) {
     billTo = "huggingface";
   }
 
-  console.log(ipAddresses);
-
   const DEFAULT_PROVIDER = PROVIDERS.novita;
   const selectedProvider =
     provider === "auto"
@@ -251,8 +249,6 @@ export async function PUT(request: NextRequest) {
   const ip = authHeaders.get("x-forwarded-for")?.includes(",")
     ? authHeaders.get("x-forwarded-for")?.split(",")[1].trim()
     : authHeaders.get("x-forwarded-for");
-
-  console.log(ipAddresses);
 
   if (!token) {
     ipAddresses.set(ip, (ipAddresses.get(ip) || 0) + 1);
