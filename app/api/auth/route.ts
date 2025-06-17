@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
     `${host.includes("localhost") ? "http://" : "https://"}` +
     host +
     "/auth/callback";
-  const loginRedirectUrl = `https://huggingface.co/oauth/authorize?client_id=${process.env.HUGGINGFACE_CLIENT_ID}&redirect_uri=${redirect_uri}&response_type=code&scope=openid%20profile%20write-repos%20manage-repos%20inference-api&prompt=consent&state=1234567890`;
+  const loginRedirectUrl = `https://huggingface.co/oauth/authorize?client_id=${process.env.OAUTH_CLIENT_ID}&redirect_uri=${redirect_uri}&response_type=code&scope=openid%20profile%20write-repos%20manage-repos%20inference-api&prompt=consent&state=1234567890`;
 
   return NextResponse.json(
     {
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
   }
 
   const Authorization = `Basic ${Buffer.from(
-    `${process.env.HUGGINGFACE_CLIENT_ID}:${process.env.HUGGINGFACE_CLIENT_SECRET}`
+    `${process.env.OAUTH_CLIENT_ID}:${process.env.OAUTH_CLIENT_SECRET}`
   ).toString("base64")}`;
 
   const host =
