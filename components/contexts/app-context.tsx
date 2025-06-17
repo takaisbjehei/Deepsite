@@ -41,7 +41,6 @@ export default function AppContext({
   const events: any = {};
 
   useBroadcastChannel("auth", (message) => {
-    console.log("Received message from auth channel:", message);
     if (pathname.includes("/auth/callback")) return;
 
     if (!message.code) return;

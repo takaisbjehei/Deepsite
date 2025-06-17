@@ -64,11 +64,9 @@ export async function POST(request: NextRequest) {
     token = process.env.HF_TOKEN;
   }
 
-  const ip =
-    authHeaders.get("x-forwarded-for")?.split(",")[0].trim() ||
-    authHeaders.get("x-real-ip") ||
-    "0.0.0.0";
-  console.log(request.headers);
+  const ip = authHeaders.get("x-forwarded-for")?.includes(",")
+    ? authHeaders.get("x-forwarded-for")?.split(",")[1].trim()
+    : authHeaders.get("x-forwarded-for");
 
   if (!token) {
     ipAddresses.set(ip, (ipAddresses.get(ip) || 0) + 1);
@@ -248,10 +246,9 @@ export async function PUT(request: NextRequest) {
     token = process.env.HF_TOKEN;
   }
 
-  const ip =
-    authHeaders.get("x-forwarded-for")?.split(",")[0].trim() ||
-    authHeaders.get("x-real-ip") ||
-    "0.0.0.0";
+  const ip = authHeaders.get("x-forwarded-for")?.includes(",")
+    ? authHeaders.get("x-forwarded-for")?.split(",")[1].trim()
+    : authHeaders.get("x-forwarded-for");
 
   if (!token) {
     ipAddresses.set(ip, (ipAddresses.get(ip) || 0) + 1);

@@ -101,7 +101,6 @@ export function AskAI({
           headers: {
             "Content-Type": "application/json",
             "x-forwarded-for": window.location.hostname,
-            "x-real-ip": window.location.hostname,
           },
           signal: abortController.signal,
         });
@@ -141,7 +140,6 @@ export function AskAI({
           headers: {
             "Content-Type": "application/json",
             "x-forwarded-for": window.location.hostname,
-            "x-real-ip": window.location.hostname,
           },
           signal: abortController.signal,
         });
