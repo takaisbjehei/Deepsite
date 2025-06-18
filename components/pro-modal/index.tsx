@@ -1,6 +1,6 @@
 import { useLocalStorage } from "react-use";
-import { Button } from "../ui/button";
-import { Dialog, DialogContent } from "../ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { CheckCheck } from "lucide-react";
 import { isTheSameHtml } from "@/lib/compare-html-diff";
 
@@ -24,6 +24,7 @@ export const ProModal = ({
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-lg lg:!p-8 !rounded-3xl !bg-white !border-neutral-100">
+        <DialogTitle className="hidden" />
         <main className="flex flex-col items-start text-left relative pt-2">
           <div className="flex items-center justify-start -space-x-4 mb-5">
             <div className="size-14 rounded-full bg-pink-200 shadow-2xs flex items-center justify-center text-3xl opacity-50">

@@ -145,21 +145,21 @@ export function AskAI({
           signal: abortController.signal,
         });
         if (request && request.body) {
-          if (!request.ok) {
-            const res = await request.json();
-            if (res.openLogin) {
-              setOpen(true);
-            } else if (res.openSelectProvider) {
-              setOpenProvider(true);
-              setProviderError(res.message);
-            } else if (res.openProModal) {
-              setOpenProModal(true);
-            } else {
-              toast.error(res.message);
-            }
-            setisAiWorking(false);
-            return;
-          }
+          // if (!request.ok) {
+          //   const res = await request.json();
+          //   if (res.openLogin) {
+          //     setOpen(true);
+          //   } else if (res.openSelectProvider) {
+          //     setOpenProvider(true);
+          //     setProviderError(res.message);
+          //   } else if (res.openProModal) {
+          //     setOpenProModal(true);
+          //   } else {
+          //     toast.error(res.message);
+          //   }
+          //   setisAiWorking(false);
+          //   return;
+          // }
           const reader = request.body.getReader();
           const decoder = new TextDecoder("utf-8");
           const selectedModel = MODELS.find(
@@ -190,55 +190,71 @@ export function AskAI({
             }
 
             const chunk = decoder.decode(value, { stream: true });
-            thinkResponse += chunk;
-            if (selectedModel?.isThinker) {
-              const thinkMatch = thinkResponse.match(/<think>[\s\S]*/)?.[0];
-              if (thinkMatch && !thinkResponse?.includes("</think>")) {
-                if ((contentThink?.length ?? 0) < 3) {
-                  setOpenThink(true);
+            try {
+              const res = JSON.parse(chunk);
+              if (res.openLogin) {
+                setOpen(true);
+              } else if (res.openSelectProvider) {
+                setOpenProvider(true);
+                setProviderError(res.message);
+              } else if (res.openProModal) {
+                setOpenProModal(true);
+              } else {
+                toast.error(res.message);
+              }
+              setisAiWorking(false);
+              return;
+            } catch {
+              thinkResponse += chunk;
+              if (selectedModel?.isThinker) {
+                const thinkMatch = thinkResponse.match(/<think>[\s\S]*/)?.[0];
+                if (thinkMatch && !thinkResponse?.includes("</think>")) {
+                  if ((contentThink?.length ?? 0) < 3) {
+                    setOpenThink(true);
+                  }
+                  setThink(thinkMatch.replace("<think>", "").trim());
+                  contentThink += chunk;
+                  return read();
                 }
-                setThink(thinkMatch.replace("<think>", "").trim());
-                contentThink += chunk;
-                return read();
               }
+
+              contentResponse += chunk;
+
+              const newHtml = contentResponse.match(
+                /<!DOCTYPE html>[\s\S]*/
+              )?.[0];
+              if (newHtml) {
+                setIsThinking(false);
+                let partialDoc = newHtml;
+                if (
+                  partialDoc.includes("<head>") &&
+                  !partialDoc.includes("</head>")
+                ) {
+                  partialDoc += "\n</head>";
+                }
+                if (
+                  partialDoc.includes("<body") &&
+                  !partialDoc.includes("</body>")
+                ) {
+                  partialDoc += "\n</body>";
+                }
+                if (!partialDoc.includes("</html>")) {
+                  partialDoc += "\n</html>";
+                }
+
+                // Throttle the re-renders to avoid flashing/flicker
+                const now = Date.now();
+                if (now - lastRenderTime > 300) {
+                  setHtml(partialDoc);
+                  lastRenderTime = now;
+                }
+
+                if (partialDoc.length > 200) {
+                  onScrollToBottom();
+                }
+              }
+              read();
             }
-
-            contentResponse += chunk;
-
-            const newHtml = contentResponse.match(
-              /<!DOCTYPE html>[\s\S]*/
-            )?.[0];
-            if (newHtml) {
-              setIsThinking(false);
-              let partialDoc = newHtml;
-              if (
-                partialDoc.includes("<head>") &&
-                !partialDoc.includes("</head>")
-              ) {
-                partialDoc += "\n</head>";
-              }
-              if (
-                partialDoc.includes("<body") &&
-                !partialDoc.includes("</body>")
-              ) {
-                partialDoc += "\n</body>";
-              }
-              if (!partialDoc.includes("</html>")) {
-                partialDoc += "\n</html>";
-              }
-
-              // Throttle the re-renders to avoid flashing/flicker
-              const now = Date.now();
-              if (now - lastRenderTime > 300) {
-                setHtml(partialDoc);
-                lastRenderTime = now;
-              }
-
-              if (partialDoc.length > 200) {
-                onScrollToBottom();
-              }
-            }
-            read();
           };
 
           read();
