@@ -17,14 +17,17 @@ export const FollowUpTooltip = () => {
       >
         <header className="bg-neutral-950 px-4 py-3 border-b border-neutral-700/70">
           <p className="text-base text-neutral-200 font-semibold">
-            What is a Follow-Up?
+            ⚡ Faster, Smarter Updates
           </p>
         </header>
         <main className="p-4">
-          <p className="text-sm text-neutral-400">
-            A Follow-Up is a request to DeepSite to edit the current HTML
-            instead of starting from scratch. This is useful when you want to
-            make small changes or improvements to the existing design.
+          <p className="text-neutral-300 text-sm">
+            Using the Diff-Patch system, allow DeepSite to intelligently update
+            your project without rewritting the entire codebase.
+          </p>
+          <p className="text-neutral-500 text-sm mt-2">
+            This means faster updates, less data usage, and a more efficient
+            development process.
           </p>
         </main>
       </PopoverContent>

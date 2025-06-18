@@ -429,17 +429,17 @@ export function AskAI({
         {html !== defaultHTML && (
           <div className="absolute top-0 right-0 -translate-y-[calc(100%+8px)] select-none text-xs text-neutral-400 flex items-center justify-center gap-2 bg-neutral-800 border border-neutral-700 rounded-md p-1 pr-2.5">
             <label
-              htmlFor="follow-up-checkbox"
+              htmlFor="diff-patch-checkbox"
               className="flex items-center gap-1.5 cursor-pointer"
             >
               <Checkbox
-                id="follow-up-checkbox"
+                id="diff-patch-checkbox"
                 checked={isFollowUp}
                 onCheckedChange={(e) => {
                   setIsFollowUp(e === true);
                 }}
               />
-              Follow-Up
+              Diff-Patch Update
             </label>
             <FollowUpTooltip />
           </div>
