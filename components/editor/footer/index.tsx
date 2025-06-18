@@ -64,7 +64,7 @@ export function Footer({
         {user && <p className="text-neutral-700">|</p>}
         <Button size="sm" variant="secondary" onClick={onReset}>
           <MdAdd className="text-sm" />
-          <span>New Project</span>
+          New <span className="max-lg:hidden">Project</span>
         </Button>
         {htmlHistory && htmlHistory.length > 0 && (
           <>

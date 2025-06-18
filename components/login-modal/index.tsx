@@ -12,7 +12,7 @@ export const LoginModal = ({
   description = "Log In through your Hugging Face account to continue using DeepSite and increase your monthly free limit.",
 }: {
   open: boolean;
-  html: string;
+  html?: string;
   onClose: React.Dispatch<React.SetStateAction<boolean>>;
   title?: string;
   description?: string;
@@ -20,7 +20,7 @@ export const LoginModal = ({
   const { openLoginWindow } = useUser();
   const [, setStorage] = useLocalStorage("html_content");
   const handleClick = async () => {
-    if (html !== defaultHTML) {
+    if (html && html !== defaultHTML) {
       setStorage(html);
     }
     openLoginWindow();
