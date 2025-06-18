@@ -51,7 +51,7 @@ export const htmlTagToText = (tagName: string): string => {
     case "aside":
       return "Aside";
     case "div":
-      return "Division";
+      return "Block";
     case "main":
       return "Main Content";
     case "details":

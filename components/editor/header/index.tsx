@@ -30,7 +30,7 @@ export function Header({
   children?: ReactNode;
 }) {
   return (
-    <header className="border-b bg-slate-200 border-slate-300 dark:bg-neutral-950 dark:border-neutral-800 px-3 lg:px-6 py-2 grid grid-cols-3 z-20">
+    <header className="border-b bg-slate-200 border-slate-300 dark:bg-neutral-950 dark:border-neutral-800 px-3 lg:px-6 py-2 flex items-center max-lg:gap-3 justify-between lg:grid lg:grid-cols-3 z-20">
       <div className="flex items-center justify-start gap-3">
         <h1 className="text-neutral-900 dark:text-white text-lg lg:text-xl font-bold flex items-center justify-start">
           <Image
@@ -47,7 +47,7 @@ export function Header({
           </p>
         </h1>
       </div>
-      <div className="flex items-center justify-center gap-1">
+      <div className="flex items-center justify-start lg:justify-center gap-1 max-lg:pl-3 flex-1 max-lg:border-l max-lg:border-l-neutral-800">
         {TABS.map((item) => (
           <Button
             key={item.value}
