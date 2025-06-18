@@ -192,6 +192,7 @@ export async function POST(request: NextRequest) {
             encoder.encode(
               JSON.stringify({
                 ok: false,
+                openSelectProvider: true,
                 message:
                   error.message ||
                   "An error occurred while processing your request.",
