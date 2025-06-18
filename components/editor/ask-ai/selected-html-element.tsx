@@ -37,7 +37,7 @@ export const SelectedHtmlElement = ({
           <Code className="text-neutral-300 size-3.5" />
         </div>
         <p className="text-sm font-semibold text-neutral-300">
-          Edit {htmlTagToText(tagName)}
+          {element.textContent?.trim().split(/\s+/)[0]} {htmlTagToText(tagName)}
         </p>
         <XCircle className="text-neutral-300 size-4" />
       </CollapsibleTrigger>

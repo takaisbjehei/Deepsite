@@ -59,7 +59,7 @@ export function Footer({
               </div>
             </>
           ) : (
-            <UserMenu />
+            <UserMenu className="!p-1 !pr-3 !h-auto" />
           ))}
         {user && <p className="text-neutral-700">|</p>}
         <Button size="sm" variant="secondary" onClick={onReset}>
