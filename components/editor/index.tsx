@@ -25,6 +25,7 @@ import { DeployButton } from "./deploy-button";
 import { Project } from "@/types";
 import { SaveButton } from "./save-button";
 import { LoadProject } from "../my-projects/load-project";
+import { isTheSameHtml } from "@/lib/compare-html-diff";
 
 export const AppEditor = ({ project }: { project?: Project | null }) => {
   const [htmlStorage, , removeHtmlStorage] = useLocalStorage("html_content");
@@ -148,7 +149,7 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
 
   // Prevent accidental navigation away when AI is working or content has changed
   useEvent("beforeunload", (e) => {
-    if (isAiWorking || html !== defaultHTML) {
+    if (isAiWorking || !isTheSameHtml(html)) {
       e.preventDefault();
       return "";
     }

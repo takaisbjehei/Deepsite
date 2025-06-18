@@ -1,8 +1,8 @@
 import { useLocalStorage } from "react-use";
-import { defaultHTML } from "@/lib/consts";
 import { Button } from "../ui/button";
 import { Dialog, DialogContent } from "../ui/dialog";
 import { CheckCheck } from "lucide-react";
+import { isTheSameHtml } from "@/lib/compare-html-diff";
 
 export const ProModal = ({
   open,
@@ -15,7 +15,7 @@ export const ProModal = ({
 }) => {
   const [, setStorage] = useLocalStorage("html_content");
   const handleProClick = () => {
-    if (html !== defaultHTML) {
+    if (!isTheSameHtml(html)) {
       setStorage(html);
     }
     window.open("https://huggingface.co/subscribe/pro?from=DeepSite", "_blank");

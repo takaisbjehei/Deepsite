@@ -1,13 +1,12 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useRef } from "react";
+import { useState, useRef, useMemo } from "react";
 import classNames from "classnames";
 import { toast } from "sonner";
 import { useLocalStorage, useUpdateEffect } from "react-use";
 import { ArrowUp, ChevronDown, Crosshair } from "lucide-react";
 import { FaStopCircle } from "react-icons/fa";
 
-import { defaultHTML } from "@/lib/consts";
 import ProModal from "@/components/pro-modal";
 import { Button } from "@/components/ui/button";
 import { MODELS } from "@/lib/providers";
@@ -22,6 +21,7 @@ import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import { TooltipContent } from "@radix-ui/react-tooltip";
 import { SelectedHtmlElement } from "./selected-html-element";
 import { FollowUpTooltip } from "./follow-up-tooltip";
+import { isTheSameHtml } from "@/lib/compare-html-diff";
 
 export function AskAI({
   html,
@@ -84,7 +84,7 @@ export function AskAI({
     setController(abortController);
     try {
       onNewPrompt(prompt);
-      if (isFollowUp && !redesignMarkdown && html !== defaultHTML) {
+      if (isFollowUp && !redesignMarkdown && !isSameHtml) {
         const selectedElementHtml = selectedElement
           ? selectedElement.outerHTML
           : "";
@@ -135,7 +135,7 @@ export function AskAI({
             prompt,
             provider,
             model,
-            html: html === defaultHTML ? "" : html,
+            html: isSameHtml ? "" : html,
             redesignMarkdown,
           }),
           headers: {
@@ -276,6 +276,10 @@ export function AskAI({
     }
   }, [isThinking]);
 
+  const isSameHtml = useMemo(() => {
+    return isTheSameHtml(html);
+  }, [html]);
+
   return (
     <div className="px-3">
       <div className="relative bg-neutral-800 border border-neutral-700 rounded-2xl ring-[4px] focus-within:ring-neutral-500/30 focus-within:border-neutral-600 ring-transparent z-10 w-full group">
@@ -371,7 +375,7 @@ export function AskAI({
         <div className="flex items-center justify-between gap-2 px-4 pb-3">
           <div className="flex-1 flex items-center justify-start gap-1.5">
             <ReImagine onRedesign={(md) => callAi(md)} />
-            {html !== defaultHTML && (
+            {!isSameHtml && (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button
@@ -408,7 +412,7 @@ export function AskAI({
               onModelChange={setModel}
               open={openProvider}
               error={providerError}
-              isFollowUp={html !== defaultHTML}
+              isFollowUp={!isSameHtml}
               onClose={setOpenProvider}
             />
             <Button
@@ -426,7 +430,7 @@ export function AskAI({
           open={openProModal}
           onClose={() => setOpenProModal(false)}
         />
-        {html !== defaultHTML && (
+        {!isSameHtml && (
           <div className="absolute top-0 right-0 -translate-y-[calc(100%+8px)] select-none text-xs text-neutral-400 flex items-center justify-center gap-2 bg-neutral-800 border border-neutral-700 rounded-md p-1 pr-2.5">
             <label
               htmlFor="diff-patch-checkbox"

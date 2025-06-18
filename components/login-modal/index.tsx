@@ -1,8 +1,8 @@
 import { useLocalStorage } from "react-use";
-import { defaultHTML } from "@/lib/consts";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useUser } from "@/hooks/useUser";
+import { isTheSameHtml } from "@/lib/compare-html-diff";
 
 export const LoginModal = ({
   open,
@@ -20,7 +20,7 @@ export const LoginModal = ({
   const { openLoginWindow } = useUser();
   const [, setStorage] = useLocalStorage("html_content");
   const handleClick = async () => {
-    if (html && html !== defaultHTML) {
+    if (html && !isTheSameHtml(html)) {
       setStorage(html);
     }
     openLoginWindow();
