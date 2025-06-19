@@ -74,14 +74,6 @@ export function Settings({
             Customize Settings
           </header>
           <main className="px-4 pt-5 pb-6 space-y-5">
-            {/* <a
-              href="https://huggingface.co/spaces/enzostvs/deepsite/discussions/74"
-              target="_blank"
-              className="w-full flex items-center justify-between text-neutral-300 bg-neutral-300/15 border border-neutral-300/15 pl-4 p-1.5 rounded-full text-sm font-medium hover:brightness-95"
-            >
-              How to use it locally?
-              <Button size="xs">See guide</Button>
-            </a> */}
             {error !== "" && (
               <p className="text-red-500 text-sm font-medium mb-2 flex items-center justify-between bg-red-500/10 p-2 rounded-md">
                 {error}

@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { FaMobileAlt } from "react-icons/fa";
-import { RefreshCcw, SparkleIcon } from "lucide-react";
+import { HelpCircle, RefreshCcw, SparkleIcon } from "lucide-react";
 import { FaLaptopCode } from "react-icons/fa6";
 import { HtmlHistory } from "@/types";
 import { Button } from "@/components/ui/button";
@@ -81,6 +81,15 @@ export function Footer({
           <Button size="sm" variant="ghost">
             <SparkleIcon className="size-3.5" />
             <span className="max-lg:hidden">DeepSite Gallery</span>
+          </Button>
+        </a>
+        <a
+          target="_blank"
+          href="https://huggingface.co/spaces/enzostvs/deepsite/discussions/157"
+        >
+          <Button size="sm" variant="outline">
+            <HelpCircle className="size-3.5" />
+            <span className="max-lg:hidden">Help</span>
           </Button>
         </a>
         <Button size="sm" variant="outline" onClick={handleRefreshIframe}>

@@ -417,7 +417,7 @@ export function AskAI({
               onModelChange={setModel}
               open={openProvider}
               error={providerError}
-              isFollowUp={!isSameHtml}
+              isFollowUp={!isSameHtml && isFollowUp}
               onClose={setOpenProvider}
             />
             <Button
@@ -445,6 +445,9 @@ export function AskAI({
                 id="diff-patch-checkbox"
                 checked={isFollowUp}
                 onCheckedChange={(e) => {
+                  if (e === true && !isSameHtml) {
+                    setModel(MODELS[0].value);
+                  }
                   setIsFollowUp(e === true);
                 }}
               />

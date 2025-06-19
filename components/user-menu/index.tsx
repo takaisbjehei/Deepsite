@@ -32,7 +32,11 @@ export const UserMenu = ({ className }: { className?: string }) => {
               {user?.fullname?.charAt(0).toUpperCase() ?? "E"}
             </AvatarFallback>
           </Avatar>
-          {user?.fullname}
+          <span className="max-lg:hidden">{user?.fullname}</span>
+          <span className="lg:hidden">
+            {user?.fullname.slice(0, 10)}
+            {(user?.fullname?.length ?? 0) > 10 ? "..." : ""}
+          </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="start">
