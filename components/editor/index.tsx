@@ -164,7 +164,6 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
         resizer.current.addEventListener("mousedown", handleMouseDown);
       }
     } else {
-      setIsEditableModeEnabled(false);
       if (preview.current) {
         // Reset preview width when switching to preview tab
         preview.current.style.width = "100%";
@@ -312,6 +311,7 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
           onClickElement={(element) => {
             setIsEditableModeEnabled(false);
             setSelectedElement(element);
+            setCurrentTab("chat");
           }}
         />
       </main>

@@ -131,8 +131,12 @@ export const Preview = ({
         <div
           className="cursor-pointer absolute bg-sky-500/10 border-[2px] border-dashed border-sky-500 rounded-r-lg rounded-b-lg p-3 z-10 pointer-events-none"
           style={{
-            top: selectedElement.getBoundingClientRect().top + 24,
-            left: selectedElement.getBoundingClientRect().left + 24,
+            top:
+              selectedElement.getBoundingClientRect().top +
+              (currentTab === "preview" ? 0 : 24),
+            left:
+              selectedElement.getBoundingClientRect().left +
+              (currentTab === "preview" ? 0 : 24),
             width: selectedElement.getBoundingClientRect().width,
             height: selectedElement.getBoundingClientRect().height,
           }}
