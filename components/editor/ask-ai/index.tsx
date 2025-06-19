@@ -193,8 +193,8 @@ export function AskAI({
 
             const isJson =
               chunk.trim().startsWith("{") && chunk.trim().endsWith("}");
-            if (isJson) {
-              const res = JSON.parse(chunk);
+            const res = isJson ? JSON.parse(chunk) : null;
+            if (res && !res.ok) {
               if (res.openLogin) {
                 setOpen(true);
               } else if (res.openSelectProvider) {
