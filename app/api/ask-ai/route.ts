@@ -192,7 +192,6 @@ export async function POST(request: NextRequest) {
             encoder.encode(
               JSON.stringify({
                 ok: false,
-                openSelectProvider: true,
                 message:
                   error.message ||
                   "An error occurred while processing your request.",
@@ -201,14 +200,7 @@ export async function POST(request: NextRequest) {
           );
         }
       } finally {
-        try {
-          // Only close if writer exists and is not already closed
-          if (writer && !writer.closed) {
-            await writer.close();
-          }
-        } catch {
-          // Ignore errors on close
-        }
+        await writer?.close();
       }
     })();
 
