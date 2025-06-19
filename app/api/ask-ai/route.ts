@@ -201,7 +201,14 @@ export async function POST(request: NextRequest) {
           );
         }
       } finally {
-        await writer?.close();
+        try {
+          // Only close if writer exists and is not already closed
+          if (writer && !writer.closed) {
+            await writer.close();
+          }
+        } catch {
+          // Ignore errors on close
+        }
       }
     })();
 

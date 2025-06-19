@@ -190,7 +190,10 @@ export function AskAI({
             }
 
             const chunk = decoder.decode(value, { stream: true });
-            try {
+
+            const isJson =
+              chunk.trim().startsWith("{") && chunk.trim().endsWith("}");
+            if (isJson) {
               const res = JSON.parse(chunk);
               if (res.openLogin) {
                 setOpen(true);
@@ -204,7 +207,7 @@ export function AskAI({
               }
               setisAiWorking(false);
               return;
-            } catch {
+            } else {
               thinkResponse += chunk;
               if (selectedModel?.isThinker) {
                 const thinkMatch = thinkResponse.match(/<think>[\s\S]*/)?.[0];

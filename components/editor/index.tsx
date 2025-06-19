@@ -172,6 +172,10 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
     }
   }, [currentTab]);
 
+  const handleEditorValidation = (markers: editor.IMarker[]) => {
+    console.log("Editor validation markers:", markers);
+  };
+
   return (
     <section className="h-[100dvh] bg-neutral-950 flex flex-col">
       <Header tab={currentTab} onNewTab={setCurrentTab}>
@@ -201,7 +205,7 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
                 }}
               />
               <Editor
-                language="html"
+                defaultLanguage="html"
                 theme="vs-dark"
                 className={classNames(
                   "h-full bg-neutral-900 transition-all duration-200 absolute left-0 top-0",
@@ -228,6 +232,7 @@ export const AppEditor = ({ project }: { project?: Project | null }) => {
                   editorRef.current = editor;
                   monacoRef.current = monaco;
                 }}
+                onValidate={handleEditorValidation}
               />
               <AskAI
                 html={html}
