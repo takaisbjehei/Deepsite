@@ -22,9 +22,13 @@ export async function POST(req: NextRequest) {
 
   const host =
     req.headers.get("host") ?? req.headers.get("origin") ?? "localhost:3000";
+
+  const url = host.includes("/spaces/enzostvs")
+    ? "enzostvs-deepsite.hf.space"
+    : host;
   const redirect_uri =
     `${host.includes("localhost") ? "http://" : "https://"}` +
-    host +
+    url +
     "/auth/callback";
   const request_auth = await fetch("https://huggingface.co/oauth/token", {
     method: "POST",
