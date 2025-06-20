@@ -173,7 +173,6 @@ export function AskAI({
                 return;
               }
 
-              console.log("AI response complete", contentResponse);
               toast.success("AI responded successfully");
               setPreviousPrompt(prompt);
               setPrompt("");

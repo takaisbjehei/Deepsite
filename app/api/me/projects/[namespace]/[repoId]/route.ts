@@ -205,6 +205,7 @@ export async function POST(
     space_id: `${namespace}/${repoId}`,
   }).lean();
   if (project) {
+    // redirect to the project page if it already exists
     return NextResponse.json(
       {
         ok: false,

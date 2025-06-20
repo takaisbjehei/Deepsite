@@ -59,7 +59,6 @@ export const LoadProject = ({
     setIsLoading(true);
     try {
       const response = await api.post(`/me/projects/${username}/${namespace}`);
-      console.log("response", response);
       toast.success("Project imported successfully!");
       setOpen(false);
       setUrl("");
