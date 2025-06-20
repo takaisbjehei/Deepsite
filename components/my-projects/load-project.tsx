@@ -16,6 +16,7 @@ import { toast } from "sonner";
 import { api } from "@/lib/api";
 import { useUser } from "@/hooks/useUser";
 import { LoginModal } from "../login-modal";
+import { useRouter } from "next/navigation";
 
 export const LoadProject = ({
   fullXsBtn = false,
@@ -25,6 +26,7 @@ export const LoadProject = ({
   onSuccess: (project: Project) => void;
 }) => {
   const { user } = useUser();
+  const router = useRouter();
 
   const [openLoginModal, setOpenLoginModal] = useState(false);
   const [open, setOpen] = useState(false);
@@ -65,6 +67,9 @@ export const LoadProject = ({
       onSuccess(response.data.project);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      if (error?.response?.data?.redirect) {
+        return router.push(error.response.data.redirect);
+      }
       toast.error(
         error?.response?.data?.error ?? "Failed to import the project."
       );

@@ -37,3 +37,27 @@ export async function getProjects(): Promise<{
     projects: JSON.parse(JSON.stringify(projects)) as ProjectType[],
   };
 }
+
+export async function getProject(
+  namespace: string,
+  repoId: string
+): Promise<ProjectType | null> {
+  const user = await isAuthenticated();
+
+  if (user instanceof NextResponse || !user) {
+    return null;
+  }
+
+  await dbConnect();
+  const project = await Project.findOne({
+    user_id: user.id,
+    namespace,
+    repoId,
+  }).lean();
+
+  if (!project) {
+    return null;
+  }
+
+  return JSON.parse(JSON.stringify(project)) as ProjectType;
+}

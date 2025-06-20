@@ -210,6 +210,7 @@ export async function POST(
       {
         ok: false,
         error: "Project already exists",
+        redirect: `/projects/${namespace}/${repoId}`,
       },
       { status: 400 }
     );
