@@ -56,7 +56,7 @@ export function SaveButton({
     <>
       <Button
         variant="default"
-        className="max-lg:hidden !px-4"
+        className="max-lg:hidden !px-4 relative"
         onClick={updateSpace}
       >
         <MdSave className="size-4" />
@@ -66,7 +66,7 @@ export function SaveButton({
       <Button
         variant="default"
         size="sm"
-        className="lg:hidden"
+        className="lg:hidden relative"
         onClick={updateSpace}
       >
         Save {loading && <Loading className="ml-2 size-4 animate-spin" />}
