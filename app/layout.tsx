@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import MY_TOKEN_KEY from "@/lib/get-cookie-name";
 import { apiServer } from "@/lib/api";
 import AppContext from "@/components/contexts/app-context";
-import Head from "next/head";
+import Script from "next/script";
 
 const inter = Inter({
   variable: "--font-inter-sans",
@@ -90,13 +90,11 @@ export default async function RootLayout({
   const data = await getMe();
   return (
     <html lang="en">
-      <Head>
-        <script
-          defer
-          data-domain="deepsite.hf.co"
-          src="https://plausible.io/js/script.js"
-        ></script>
-      </Head>
+      <Script
+        defer
+        data-domain="deepsite.hf.co"
+        src="https://plausible.io/js/script.js"
+      ></Script>
       <body
         className={`${inter.variable} ${ptSans.variable} antialiased bg-black dark h-[100dvh] overflow-hidden`}
       >
